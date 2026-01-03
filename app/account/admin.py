@@ -75,7 +75,6 @@ class AccountAdmin(BaseAdmin):
         "cpf",
         "phone",
     )
-
     search_help_text = "Buscar por nome, e-mail, cpf ou telefone"
     list_filter = BaseAdmin.list_filter + ("type",)
 
@@ -90,7 +89,6 @@ class AccountAdmin(BaseAdmin):
                     "type",
                     "cpf",
                     "phone",
-                    "birthdate",
                 ),
             },
         ),
@@ -99,13 +97,14 @@ class AccountAdmin(BaseAdmin):
             {
                 "classes": ("tab",),
                 "fields": (
+                    "uuid",
                     "created_at",
                     "updated_at",
-                    "deleted_at",
                 ),
             },
         ),
     )
+    autocomplete_fields = ("user",)
 
     # Display functions
     @display(description="Nome")

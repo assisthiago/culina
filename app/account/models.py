@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from app.utils import SoftDeleteModel, TimestampedModel
+from app.utils import BaseModel
 
 
-class Account(TimestampedModel, SoftDeleteModel):
+class Account(BaseModel):
 
     TYPE_CLIENT = "client"
     TYPE_ADMIN = "admin"
@@ -22,7 +22,6 @@ class Account(TimestampedModel, SoftDeleteModel):
     )
 
     # Fields
-    uuid = models.CharField(verbose_name="UUID", unique=True, max_length=36)
     type = models.CharField(
         verbose_name="tipo",
         max_length=10,

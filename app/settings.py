@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Local apps
     "app.account",
     "app.store",
+    "app.product",
 ]
 
 
@@ -123,8 +124,8 @@ QUERYCOUNT = {
 
 # UNFOLD Settings
 UNFOLD = {
-    "SITE_TITLE": "Praeceptor",
-    "SITE_HEADER": "Praeceptor",
+    "SITE_TITLE": "Culina",
+    "SITE_HEADER": "Culina",
     "SITE_SUBHEADER": "Painel Administrativo",
     "COLORS": {
         # Blue
@@ -196,6 +197,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Geocoding Settings
 NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org"

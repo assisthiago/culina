@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+from app.store.inlines import OpeningHoursInline
 from app.store.models import Store
 from app.utils import BaseAdmin
 
@@ -14,7 +13,67 @@ class StoreAdmin(BaseAdmin):
             super()
             .get_queryset(request)
             .select_related(
-                "account",
-                "account__user",
+                "owner",
+                "owner__user",
             )
+            .prefetch_related("opening_hours")
         )
+
+    # Changelist
+    list_display = (
+        "see_more",
+        "id",
+        "name",
+        "owner",
+        "cnpj",
+        "created_at",
+        "updated_at",
+    )
+    search_fields = ("name",)
+
+    # Changeform
+    inlines = [OpeningHoursInline]
+    fieldsets = (
+        (
+            "Informações",
+            {
+                "classes": ("tab",),
+                "fields": (
+                    "owner",
+                    "name",
+                    "cnpj",
+                    "min_order_value",
+                    "delivery_fee",
+                ),
+            },
+        ),
+        (
+            "Imagens",
+            {
+                "classes": ("tab",),
+                "fields": (
+                    "thumbnail",
+                    "banner",
+                ),
+            },
+        ),
+        (
+            "Auditoria",
+            {
+                "classes": ("tab",),
+                "fields": (
+                    "uuid",
+                    "created_at",
+                    "updated_at",
+                ),
+            },
+        ),
+    )
+    autocomplete_fields = ("owner",)
+    readonly_fields = BaseAdmin.readonly_fields + (
+        # "owner",
+        # "cnpj",
+        # "name",
+    )
+    # Display functions
+    # Actions
