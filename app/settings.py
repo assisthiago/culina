@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "drf_yasg",  # Swagger for DRF
     # Local apps
     "app.account",
+    "app.store",
 ]
 
 

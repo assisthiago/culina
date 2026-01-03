@@ -1,10 +1,10 @@
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group, User
 from django.utils.safestring import mark_safe
 from unfold.admin import ModelAdmin
-from unfold.decorators import action, display
+from unfold.decorators import display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 
 from app.account.models import Account

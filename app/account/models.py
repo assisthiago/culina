@@ -1,11 +1,7 @@
-import re
-
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
-from app.api import NominatimAPI, ViaCEPAPI
-from app.utils import SoftDeleteModel, TimestampedModel, bounding_box, haversine_km
+from app.utils import SoftDeleteModel, TimestampedModel
 
 
 class Account(TimestampedModel, SoftDeleteModel):
