@@ -1,0 +1,129 @@
+from django.contrib import admin, messages
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group, User
+from django.utils.safestring import mark_safe
+from unfold.admin import ModelAdmin
+from unfold.decorators import action, display
+from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+
+from app.account.models import Account
+from app.utils import BaseAdmin
+
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
+
+@admin.register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
+    # Changelist
+    list_display = (
+        "see_more",
+        "id",
+        "email",
+        "first_name",
+        "last_name",
+        "is_active",
+        "is_staff",
+    )
+    list_filter = (
+        "is_staff",
+        "is_superuser",
+        "is_active",
+        "groups",
+    )
+    search_fields = (
+        "first_name",
+        "last_name",
+        "email",
+    )
+    search_help_text = "Buscar por nome de usuário, nome, sobrenome ou e-mail"
+
+    @display(description="")
+    def see_more(self, obj):
+        return mark_safe('<span class="material-symbols-outlined">visibility</span>')
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    pass
+
+
+# Admins
+@admin.register(Account)
+class AccountAdmin(BaseAdmin):
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("user")
+
+    # Changelist
+    list_display = (
+        "see_more",
+        "id",
+        "user_full_name",
+        "user_email",
+        "user_type",
+    )
+    search_fields = (
+        "user__first_name",
+        "user__last_name",
+        "user__email",
+        "cpf",
+        "phone",
+    )
+
+    search_help_text = "Buscar por nome, e-mail, cpf ou telefone"
+    list_filter = BaseAdmin.list_filter + ("type",)
+
+    # Changeform
+    fieldsets = (
+        (
+            "Informações",
+            {
+                "classes": ("tab",),
+                "fields": (
+                    "user",
+                    "type",
+                    "cpf",
+                    "phone",
+                    "birthdate",
+                ),
+            },
+        ),
+        (
+            "Auditoria",
+            {
+                "classes": ("tab",),
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                    "deleted_at",
+                ),
+            },
+        ),
+    )
+
+    # Display functions
+    @display(description="Nome")
+    def user_full_name(self, obj):
+        return obj.user.get_full_name()
+
+    @display(description="E-mail")
+    def user_email(self, obj):
+        return obj.user.email
+
+    @display(
+        description="Tipo",
+        label={
+            Account.TYPE_CLIENT: "primary",
+            Account.TYPE_ADMIN: "success",
+        },
+    )
+    def user_type(self, obj):
+        return obj.type, obj.get_type_display()
+
+    # Actions

@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "drf_yasg",  # Swagger for DRF
+    # Local apps
+    "app.account",
 ]
 
 
