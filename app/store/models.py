@@ -50,7 +50,7 @@ class OpeningHours(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.get_weekday_display()} {self.from_hour}–{self.to_hour}"
+        return f"{self.get_weekday_display()} de {self.from_hour.strftime('%H:%M')} às {self.to_hour.strftime('%H:%M')}"
 
 
 class Store(BaseModel):
@@ -82,14 +82,14 @@ class Store(BaseModel):
         max_digits=10,
         decimal_places=2,
         default=0.00,
-        help_text="Valor mínimo do pedido. Em reais (R$).",
+        help_text="Valor mínimo do pedido. Em reais (R$). Ex: 9.99",
     )
     delivery_fee = models.DecimalField(
         verbose_name="taxa de entrega",
         max_digits=10,
         decimal_places=2,
         default=0.00,
-        help_text="Taxa fixa cobrada por entrega. Em reais (R$).",
+        help_text="Taxa fixa cobrada por entrega. Em reais (R$). Ex: 9.99",
     )
 
     class Meta:
@@ -99,3 +99,7 @@ class Store(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def cnpj_formatted(self):
+        """Return CNPJ formatted as 00.000.000/0000-00"""
+        return f"{self.cnpj[:2]}.{self.cnpj[2:5]}.{self.cnpj[5:8]}/{self.cnpj[8:12]}-{self.cnpj[12:]}"

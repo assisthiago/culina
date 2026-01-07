@@ -11,7 +11,7 @@ class ProductInline(TabularInline):
     fields = ("name", "price", "is_active")
     readonly_fields = ("price",)
     ordering_field = "position"
-    ordering = ("position",)
+    hide_ordering_field = True
 
 
 class ProductSectionsInline(TabularInline):
@@ -20,6 +20,6 @@ class ProductSectionsInline(TabularInline):
     tab = True
     extra = 0
     fields = ("section", "position")
-    readonly_fields = ("position",)
     autocomplete_fields = ("section",)
     ordering_field = "position"
+    hide_ordering_field = True

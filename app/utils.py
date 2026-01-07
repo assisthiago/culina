@@ -5,12 +5,13 @@ from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets
+from rest_framework import filters, serializers, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import RangeDateFilter
 from unfold.decorators import display
+from unfold.sections import TableSection
 
 
 # Abstract base classes for shared fields
@@ -53,6 +54,18 @@ class BaseAdmin(ModelAdmin):
     @display(description="")
     def see_more(self, obj):
         return mark_safe('<span class="material-symbols-outlined">visibility</span>')
+
+
+class BaseTableSection(TableSection):
+    """Base table section with common configurations."""
+
+    height = 300
+    fields = ("see_more",)
+
+    @display(description="")
+    def see_more(self, obj):
+        href = self.get_change_url(obj)
+        return mark_safe(f'<a href="{href}" class="material-symbols-outlined">visibility</a>')
 
 
 # ==============================================================================
@@ -114,6 +127,13 @@ class BaseModelViewSet(LookupIdOrUuidMixin, viewsets.ModelViewSet):
     ]
     ordering_fields = "__all__"
     ordering = ["-created_at"]
+
+
+class BaseSerializer(serializers.ModelSerializer):
+    """Base serializer with common configurations."""
+
+    class Meta:
+        exclude = ("id", "created_at", "updated_at")
 
 
 # ==============================================================================

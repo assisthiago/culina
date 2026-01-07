@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from app.store.inlines import OpeningHoursInline
 from app.store.models import Store
+from app.store.sections import OpeningHoursSection
 from app.utils import BaseAdmin
 
 
@@ -30,6 +31,7 @@ class StoreAdmin(BaseAdmin):
         "updated_at",
     )
     search_fields = ("name",)
+    list_sections = [OpeningHoursSection]
 
     # Changeform
     inlines = [OpeningHoursInline]

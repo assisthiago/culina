@@ -6,8 +6,13 @@ from django.urls import include, path
 from rest_framework import routers
 
 from app.documentation import schema_view
+from app.product import views as product_views
+from app.store import views as store_views
 
 router = routers.DefaultRouter()
+router.register(r"stores", store_views.StoreViewSet, basename="store")
+router.register(r"sections", product_views.SectionViewSet, basename="section")
+router.register(r"products", product_views.ProductViewSet, basename="product")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

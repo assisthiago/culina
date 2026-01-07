@@ -1,4 +1,3 @@
-# Create your models here.
 from django.db import models
 
 from app.store.models import Store
@@ -37,7 +36,11 @@ class Section(BaseModel):
 
     # Fields
     title = models.CharField(verbose_name="título", max_length=100)
-    position = models.PositiveIntegerField(verbose_name="posição", default=0)
+    position = models.PositiveIntegerField(
+        verbose_name="posição",
+        default=0,
+        db_index=True,
+    )
     min_products = models.PositiveIntegerField(
         verbose_name="mínimo de produtos",
         default=0,
@@ -119,6 +122,7 @@ class Product(BaseModel):
     position = models.PositiveIntegerField(
         verbose_name="posição",
         default=0,
+        db_index=True,
         help_text="Define a ordem de exibição dos produtos na seção.",
     )
     is_active = models.BooleanField(verbose_name="ativo", default=False)
@@ -159,7 +163,11 @@ class ProductSections(models.Model):
     )
 
     # Fields
-    position = models.PositiveIntegerField(verbose_name="posição", default=0)
+    position = models.PositiveIntegerField(
+        verbose_name="posição",
+        default=0,
+        db_index=True,
+    )
 
     class Meta:
         verbose_name = "Seção do Produto"

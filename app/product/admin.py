@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from app.product.inlines import ProductInline, ProductSectionsInline
 from app.product.models import Product, Section
-from app.product.sections import ProductsSection
+from app.product.sections import ProductsSection, SectionsSection
 from app.utils import BaseAdmin
 
 
@@ -16,6 +16,7 @@ class SectionAdmin(BaseAdmin):
             .select_related(
                 "store",
             )
+            .prefetch_related("products")
         )
 
     # Changelist
@@ -89,6 +90,7 @@ class ProductAdmin(BaseAdmin):
                 "section",
                 "section__store",
             )
+            .prefetch_related("sections")
         )
 
     # Changelist
@@ -102,6 +104,7 @@ class ProductAdmin(BaseAdmin):
         "is_active",
     )
     list_editable = ("is_active",)
+    list_sections = [SectionsSection]
 
     # Changeform
     inlines = [ProductSectionsInline]
