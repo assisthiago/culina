@@ -115,7 +115,7 @@ QUERYCOUNT = {
         "MIN_TIME_TO_LOG": 0,
         "MIN_QUERY_COUNT_TO_LOG": 0,
     },
-    "IGNORE_REQUEST_PATTERNS": ["/admin/jsi18n/", "/__debug__/"],
+    "IGNORE_REQUEST_PATTERNS": [r"^/admin/.*", r"^/__debug__/"],
     "IGNORE_SQL_PATTERNS": [],
     "DISPLAY_DUPLICATES": 1,
     "RESPONSE_HEADER": "X-DjangoQueryCount-Count",

@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
+from app.account import views as account_views
 from app.documentation import schema_view
 from app.product import views as product_views
 from app.store import views as store_views
@@ -13,6 +14,8 @@ router = routers.DefaultRouter()
 router.register(r"stores", store_views.StoreViewSet, basename="store")
 router.register(r"sections", product_views.SectionViewSet, basename="section")
 router.register(r"products", product_views.ProductViewSet, basename="product")
+router.register(r"accounts", account_views.AccountViewSet, basename="account")
+router.register(r"addresses", account_views.AddressViewSet, basename="address")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

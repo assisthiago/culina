@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from app.account.inlines import AddressInline
 from app.store.inlines import OpeningHoursInline
 from app.store.models import Store
 from app.store.sections import OpeningHoursSection
@@ -34,7 +35,7 @@ class StoreAdmin(BaseAdmin):
     list_sections = [OpeningHoursSection]
 
     # Changeform
-    inlines = [OpeningHoursInline]
+    inlines = [OpeningHoursInline, AddressInline]
     fieldsets = (
         (
             "Informações",

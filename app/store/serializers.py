@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from app.account.serializers import AddressSerializer
 from app.store.models import OpeningHours, Store
 from app.utils import BaseSerializer
 
@@ -24,6 +25,7 @@ class OpeningHoursSerializer(BaseSerializer):
 class StoreSerializer(BaseSerializer):
 
     # Nested serializers
+    addresses = AddressSerializer(many=True, read_only=True)
     opening_hours = OpeningHoursSerializer(many=True, read_only=True)
 
     # Fields
