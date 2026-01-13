@@ -22,9 +22,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     change_password_form = AdminPasswordChangeForm
 
     # Changelist
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "email",
         "first_name",
         "last_name",
@@ -62,9 +60,7 @@ class AccountAdmin(BaseAdmin):
         return super().get_queryset(request).select_related("user")
 
     # Changelist
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "user_full_name",
         "user_email",
         "user_type",
@@ -145,16 +141,12 @@ class AddressAdmin(BaseAdmin):
         )
 
     # Changelist
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "get_account_or_store",
         "get_formatted_zip_code",
         "get_type_of",
         "is_default",
     )
-    search_fields = ()
-    search_help_text = "Buscar por nome, e-mail, cpf ou telefone"
     list_filter = BaseAdmin.list_filter
 
     # Changeform

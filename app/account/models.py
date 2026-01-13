@@ -97,6 +97,12 @@ class Address(BaseModel):
         null=True,
         blank=True,
     )
+    reference = models.CharField(
+        verbose_name="referência",
+        max_length=255,
+        null=True,
+        blank=True,
+    )
     city = models.CharField(verbose_name="cidade", max_length=255)
     state = models.CharField(verbose_name="UF", max_length=2)
 

@@ -21,9 +21,7 @@ class SectionAdmin(BaseAdmin):
 
     # Changelist
     search_fields = ("title",)
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "title",
         "form",
         "is_active",
@@ -95,9 +93,7 @@ class ProductAdmin(BaseAdmin):
 
     # Changelist
     search_fields = ("name",)
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "name",
         "section",
         "price",

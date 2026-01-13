@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from app.product.models import Product, Section
 from app.utils import BaseSerializer
 
@@ -18,12 +20,19 @@ class ProductInnerSerializer(BaseSerializer):
 class SectionLiteSerializer(BaseSerializer):
 
     # Nested representations
-    products = ProductInnerSerializer(many=True, read_only=True)
+    products = serializers.SerializerMethodField()
 
     class Meta:
         model = Section
         exclude = BaseSerializer.Meta.exclude + ("store",)
         ordering = ["position"]
+
+    def get_products(self, obj):
+        products = getattr(obj, "prefetched_products", None)
+        if products is None:
+            # Fallback if prefetched_products is not set
+            products = obj.products.all()
+        return ProductInnerSerializer(products, many=True, context=self.context).data
 
 
 class ProductLiteSerializer(BaseSerializer):
@@ -50,8 +59,14 @@ class ProductSerializer(BaseSerializer):
 class SectionSerializer(BaseSerializer):
 
     # Nested representations
-    products = ProductLiteSerializer(many=True, read_only=True)
+    products = serializers.SerializerMethodField()
 
     class Meta:
         model = Section
         exclude = BaseSerializer.Meta.exclude + ("store",)
+
+    def get_products(self, obj):
+        products = getattr(obj, "prefetched_products", None)
+        if products is None:
+            products = obj.products.all()
+        return ProductLiteSerializer(products, many=True, context=self.context).data

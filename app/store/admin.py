@@ -22,9 +22,7 @@ class StoreAdmin(BaseAdmin):
         )
 
     # Changelist
-    list_display = (
-        "see_more",
-        "id",
+    list_display = BaseAdmin.list_display + (
         "name",
         "owner",
         "cnpj",
