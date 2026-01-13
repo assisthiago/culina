@@ -10,6 +10,7 @@ class StoreViewSet(BaseModelViewSet):
         "owner__user",
     ).prefetch_related(
         "opening_hours",
+        "addresses",
     )
 
     serializer_class = StoreSerializer
