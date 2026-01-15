@@ -22,7 +22,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     change_password_form = AdminPasswordChangeForm
 
     # Changelist
-    list_display = BaseAdmin.list_display + (
+    list_display = (
+        "see_more",
+        "id",
         "email",
         "first_name",
         "last_name",

@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import F, Sum
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
 from app.account.models import Account
 from app.store.models import Store
@@ -119,6 +120,45 @@ class Order(BaseModel):
         agg = self.items.aggregate(subtotal=Coalesce(Sum(F("unit_price") * F("quantity")), Decimal("0.00")))
         self.subtotal = agg["subtotal"] or Decimal("0.00")
         self.total = (self.subtotal or Decimal("0.00")) + (self.delivery_fee or Decimal("0.00"))
+
+    def format_total(self) -> str:
+        return f"R$ {self.total:.2f}"
+
+    def format_created_at(self) -> str:
+        return self.created_at.strftime("%d/%m/%Y %H:%M")
+
+    def format_updated_at(self) -> str:
+        return self.updated_at.strftime("%d/%m/%Y %H:%M")
+
+    def current_duration(self) -> int:
+        """Return the duration of the order formatted as HH:MM."""
+        target_time = timezone.now()
+        if self.status in [self.STATUS_COMPLETED, self.STATUS_CANCELED]:
+            target_time = self.updated_at
+        duration_minutes = int((target_time - self.created_at).total_seconds() // 60)
+        hours = duration_minutes // 60
+        minutes = duration_minutes % 60
+        return f"{hours:02d}:{minutes:02d}"
+
+    def current_duration_percentage(self) -> int:
+        """Return the current duration as a percentage of the expected delivery time."""
+        if self.store.delivery_time == 0:
+            return None
+        target_time = timezone.now()
+        if self.status in [self.STATUS_COMPLETED, self.STATUS_CANCELED]:
+            target_time = self.updated_at
+        duration_minutes = int((target_time - self.created_at).total_seconds() // 60)
+        percentage = (duration_minutes / self.store.delivery_time) * 100
+        return int(percentage)
+
+    def expected_delivery_time(self) -> timezone.datetime:
+        """Calculate the expected delivery time based on store's delivery time."""
+        expected_time = self.created_at + timezone.timedelta(minutes=self.store.delivery_time)
+        return expected_time.strftime("%d/%m/%Y %H:%M")
+
+    def delivery_address(self) -> str:
+        zip_code = f"{self.zip_code[:5]}-{self.zip_code[5:]}" if self.zip_code else ""
+        return f"{self.street}, {self.number} - {zip_code}"
 
     def __str__(self):
         return str(self.uuid)

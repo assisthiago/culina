@@ -149,6 +149,7 @@ UNFOLD = {
         "search_callback": "utils.search_callback",
         "show_history": True,  # Enable history
     },
+    "TABS": "app.unfold.tabs_callback",
 }
 
 # Database
@@ -161,7 +162,6 @@ DATABASES = {
         conn_health_checks=True,
     ),
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

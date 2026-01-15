@@ -9,8 +9,9 @@ from app.utils import BaseModelViewSet
 class OrderViewSet(BaseModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Order.objects.select_related(
-        "store",
         "account",
+        "account__user",
+        "store",
     ).prefetch_related("items")
     serializer_class = OrderSerializer
 

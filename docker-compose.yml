@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: culinadb
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: masterpassword
+      POSTGRES_DB: culinadb
+    ports:
+      - "5432:5432"
+    volumes:
+      - culinadb_data:/var/lib/postgresql/data
+
+volumes:
+  culinadb_data:

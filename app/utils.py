@@ -43,6 +43,7 @@ class BaseAdmin(ModelAdmin):
     list_display = (
         "see_more",
         "id",
+        "uuid",
     )
 
     readonly_fields = (

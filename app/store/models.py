@@ -84,6 +84,11 @@ class Store(BaseModel):
         default=0.00,
         help_text="Valor mínimo do pedido. Em reais (R$). Ex: 9.99",
     )
+    delivery_time = models.PositiveIntegerField(
+        verbose_name="tempo de entrega",
+        default=60,
+        help_text="Tempo estimado de entrega em minutos.",
+    )
     delivery_fee = models.DecimalField(
         verbose_name="taxa de entrega",
         max_digits=10,
