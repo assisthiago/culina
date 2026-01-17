@@ -1,5 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
+from django.utils.text import slugify
 
 from app.account.models import Account
 from app.utils import BaseModel
@@ -56,16 +58,30 @@ class OpeningHours(models.Model):
 class Store(BaseModel):
 
     # Relations
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         Account,
         verbose_name="dono",
-        related_name="store",
-        on_delete=models.CASCADE,
+        related_name="stores",
+        on_delete=models.PROTECT,
     )
 
     # Fields
-
-    name = models.CharField(verbose_name="nome", max_length=100)
+    name = models.CharField(
+        verbose_name="nome",
+        max_length=100,
+        help_text="Nome legal da loja.",
+    )
+    fantasy_name = models.CharField(
+        verbose_name="nome fantasia",
+        max_length=100,
+        help_text="Nome de divulgação da loja.",
+    )
+    slug = models.SlugField(
+        verbose_name="slug",
+        max_length=100,
+        db_index=True,
+        help_text="Gerado automaticamente a partir do nome fantasia.",
+    )
     cnpj = models.CharField(verbose_name="CNPJ", unique=True, max_length=14)
     thumbnail = models.ImageField(
         verbose_name="miniatura",
@@ -101,6 +117,10 @@ class Store(BaseModel):
         verbose_name = "loja"
         verbose_name_plural = "lojas"
         db_table = "store"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.fantasy_name.strip())[:100]
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

@@ -14,10 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-+jn9gxa$a*jj6-2#o!p21f6@6)5=t176@ntafm19y^3bw@sv%i"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+DEBUG = False
 
 # Application definition
 
@@ -67,7 +64,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "app.urls"
 
 TEMPLATES = [
@@ -106,7 +102,6 @@ HEALTH_CHECK = {
 
 # Django Debug Toolbar Settings
 INTERNAL_IPS = ["127.0.0.1"]
-
 
 # QueryCount Settings
 QUERYCOUNT = {

@@ -26,11 +26,14 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        path("health/", include("health_check.urls")),
+        path("health/", include("health_check.urls"), name="health"),
         path("api/auth/", include("rest_framework.urls"), name="api_auth"),
         path("api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
         path("api/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
         path("api/swagger.<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     ] + debug_toolbar_urls()
 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )

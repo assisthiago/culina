@@ -6,15 +6,6 @@ from app.utils import BaseModel
 
 class Section(BaseModel):
 
-    TYPE_SLIDER = "slider"
-    TYPE_LIST = "list"
-    TYPE_GRID = "grid"
-    SECTION_TYPES = [
-        (TYPE_GRID, "Grade"),
-        (TYPE_LIST, "Lista"),
-        (TYPE_SLIDER, "Slider"),
-    ]
-
     FORM_NA = "not_applicable"
     FORM_RADIO = "radio"
     FORM_INCREMENT_DECREMENT = "increment_decrement"

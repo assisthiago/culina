@@ -38,6 +38,13 @@ class Account(BaseModel):
         verbose_name_plural = "contas"
         db_table = "account"
 
+    def save(self, *args, **kwargs):
+        # Ensure the related user is staff if account type is admin
+        if self.type == self.TYPE_ADMIN:
+            self.user.is_staff = True
+            self.user.save()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.user.get_full_name()
 
