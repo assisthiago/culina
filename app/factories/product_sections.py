@@ -7,8 +7,6 @@ from app.product.models import ProductSections
 
 
 class ProductSectionFactory(DjangoModelFactory):
-    """Factory for creating ProductSection instances for testing."""
-
     product = factory.SubFactory(ProductFactory)
     section = factory.SubFactory(SectionFactory)
     position = factory.Sequence(lambda n: n)

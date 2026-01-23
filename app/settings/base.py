@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "app.order",
     "app.product",
     "app.store",
+    "app.factories",
 ]
 
 
