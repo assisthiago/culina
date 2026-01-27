@@ -11,6 +11,8 @@ from app.utils import BaseAdmin
 @admin.register(Order)
 class OrderAdmin(BaseAdmin):
 
+    scope_field = "store"
+
     def get_queryset(self, request):
         return (
             super()

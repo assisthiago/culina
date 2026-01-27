@@ -10,6 +10,8 @@ from app.utils import BaseAdmin
 @admin.register(Store)
 class StoreAdmin(BaseAdmin):
 
+    scope_field = "pk"
+
     def get_queryset(self, request):
         return (
             super()
@@ -72,9 +74,9 @@ class StoreAdmin(BaseAdmin):
     )
     autocomplete_fields = ("owner",)
     readonly_fields = BaseAdmin.readonly_fields + (
-        # "owner",
-        # "cnpj",
-        # "name",
+        "owner",
+        "cnpj",
+        "name",
     )
     # Display functions
     # Actions

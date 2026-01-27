@@ -13,6 +13,8 @@ from unfold.contrib.filters.admin import RangeDateFilter
 from unfold.decorators import display
 from unfold.sections import TableSection
 
+from app.mixin import OwnerScopeAdminMixin
+
 
 # Abstract base classes for shared fields
 class BaseModel(models.Model):
@@ -30,7 +32,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class BaseAdmin(ModelAdmin):
+class BaseAdmin(OwnerScopeAdminMixin, ModelAdmin):
     """Base admin class with common configurations."""
 
     list_per_page = settings.LIST_PER_PAGE

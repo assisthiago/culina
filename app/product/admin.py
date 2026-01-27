@@ -9,6 +9,8 @@ from app.utils import BaseAdmin
 @admin.register(Section)
 class SectionAdmin(BaseAdmin):
 
+    scope_field = "store"
+
     def get_queryset(self, request):
         return (
             super()
@@ -79,6 +81,8 @@ class SectionAdmin(BaseAdmin):
 
 @admin.register(Product)
 class ProductAdmin(BaseAdmin):
+
+    scope_field = "store"
 
     def get_queryset(self, request):
         return (
