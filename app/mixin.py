@@ -3,11 +3,11 @@ from django.core.exceptions import ImproperlyConfigured
 
 class OwnerScopeAdminMixin:
     """
-    Scope do Django Admin para mostrar apenas dados das Stores pertencentes ao owner logado.
-
-    Requer:
-      - request.user.account (OneToOne com User)
-      - Store.owner = ForeignKey(Account, related_name="stores")
+    Mixin for Django Admin to restrict queryset access based on the owner's stores.
+    Usage:
+        - Set `scope_field` to the field name that relates the model to Store.
+          This can be a direct ForeignKey to Store or a related field (e.g., "order__store").
+        - If the model is Store itself, set `scope_field` to "pk".
     """
 
     scope_field: str | None = None  # ex: "store", "order__store", "pk"
@@ -35,11 +35,11 @@ class OwnerScopeAdminMixin:
         if stores_qs is None:
             return {"pk__in": []}
 
-        # Caso especial: o próprio model é Store (filtra por pk IN stores)
+        # If the model is Store itself
         if self.scope_field == "pk":
             return {"pk__in": stores_qs.values_list("pk", flat=True)}
 
-        # Normal: o model tem FK (direta ou indireta) para Store
+        # For related fields
         return {f"{self.scope_field}__in": stores_qs}
 
     def get_queryset(self, request):
