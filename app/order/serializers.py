@@ -5,10 +5,10 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import serializers
 
 from app.account.models import Account, Address
+from app.common.models import BaseSerializer
 from app.order.models import Order, OrderItem
 from app.product.models import Product
 from app.store.models import Store
-from app.utils import BaseSerializer
 
 
 def calculate_effective_price(product: Product) -> Decimal:

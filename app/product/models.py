@@ -1,7 +1,7 @@
 from django.db import models
 
+from app.common.models import BaseModel
 from app.store.models import Store
-from app.utils import BaseModel
 
 
 class Section(BaseModel):

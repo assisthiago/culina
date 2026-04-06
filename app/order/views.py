@@ -1,9 +1,9 @@
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 
+from app.common.models import BaseModelViewSet
 from app.order.models import Order, OrderItem
 from app.order.serializers import OrderCreateSerializer, OrderSerializer
-from app.utils import BaseModelViewSet
 
 
 class OrderViewSet(BaseModelViewSet):

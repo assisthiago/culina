@@ -1,8 +1,8 @@
 from django.db.models import Prefetch
 
+from app.common.models import BaseModelViewSet
 from app.product.models import Product, Section
 from app.product.serializers import ProductSerializer, SectionSerializer
-from app.utils import BaseModelViewSet
 
 
 class SectionViewSet(BaseModelViewSet):

@@ -10,6 +10,7 @@ from app.documentation import schema_view
 from app.order import views as order_views
 from app.product import views as product_views
 from app.store import views as store_views
+from app.store.admin import StoreSetActiveView
 
 router = routers.DefaultRouter()
 router.register(r"accounts", account_views.AccountViewSet, basename="account")
@@ -20,6 +21,7 @@ router.register(r"sections", product_views.SectionViewSet, basename="section")
 router.register(r"stores", store_views.StoreViewSet, basename="store")
 
 urlpatterns = [
+    path("admin/store/active/", StoreSetActiveView.as_view(), name="store_set_active"),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls), name="api"),
 ]

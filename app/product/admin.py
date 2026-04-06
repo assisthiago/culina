@@ -1,9 +1,9 @@
 from django.contrib import admin
 
+from app.common.admin import BaseAdmin
 from app.product.inlines import ProductInline, ProductSectionsInline
 from app.product.models import Product, Section
 from app.product.sections import ProductsSection, SectionsSection
-from app.utils import BaseAdmin
 
 
 @admin.register(Section)

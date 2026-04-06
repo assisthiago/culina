@@ -1,6 +1,6 @@
+from app.common.models import BaseModelViewSet
 from app.store.models import Store
 from app.store.serializers import StoreSerializer
-from app.utils import BaseModelViewSet
 
 
 class StoreViewSet(BaseModelViewSet):

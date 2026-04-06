@@ -1,6 +1,6 @@
 from app.account.models import Account, Address
 from app.account.serializers import AccountSerializer, AddressSerializer
-from app.utils import BaseModelViewSet
+from app.common.models import BaseModelViewSet
 
 
 class AddressViewSet(BaseModelViewSet):

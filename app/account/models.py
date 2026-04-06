@@ -4,10 +4,12 @@ from django.contrib.auth.models import User
 from django.db import models, transaction
 from django.db.models import Q
 
-from app.utils import BaseModel
+from app.common.models import BaseModel
 
 
 class Account(BaseModel):
+
+    scope_field = "stores"
 
     TYPE_CLIENT = "client"
     TYPE_ADMIN = "admin"

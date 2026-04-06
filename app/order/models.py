@@ -6,8 +6,8 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 
 from app.account.models import Account
+from app.common.models import BaseModel
 from app.store.models import Store
-from app.utils import BaseModel
 
 
 class Order(BaseModel):

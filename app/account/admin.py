@@ -9,7 +9,7 @@ from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationFo
 
 from app.account.inlines import AddressInline
 from app.account.models import Account, Address
-from app.utils import BaseAdmin
+from app.common.admin import BaseAdmin
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
@@ -58,6 +58,8 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 # Admins
 @admin.register(Account)
 class AccountAdmin(BaseAdmin):
+
+    scope_field = "user"
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related("user")
@@ -131,6 +133,8 @@ class AccountAdmin(BaseAdmin):
 
 @admin.register(Address)
 class AddressAdmin(BaseAdmin):
+
+    scope_field = "store"
 
     def get_queryset(self, request):
         return (

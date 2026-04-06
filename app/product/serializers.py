@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
+from app.common.models import BaseSerializer
 from app.product.models import Product, Section
-from app.utils import BaseSerializer
 
 
 # Lite serializers for nested representation

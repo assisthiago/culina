@@ -1,8 +1,4 @@
-from django.urls import reverse
-from django.utils.safestring import mark_safe
-from unfold.admin import display
-
-from app.utils import BaseTableSection
+from app.common.admin import BaseTableSection
 
 
 class OrderItemsSection(BaseTableSection):

@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.utils.translation import ngettext
 from unfold.decorators import action, display
 
+from app.common.admin import BaseAdmin
 from app.order.inlines import OrderItemInline
 from app.order.models import Order
 from app.order.sections import OrderItemsSection
-from app.utils import BaseAdmin
 
 
 @admin.register(Order)

@@ -14,9 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-+jn9gxa$a*jj6-2#o!p21f6@6)5=t176@ntafm19y^3bw@sv%i"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
+ALLOWED_HOSTS = ["*"]  # Change this in production to specific domains or IPs
 
 INSTALLED_APPS = [
     "unfold",  # UNFOLD Admin Panel
@@ -123,7 +124,8 @@ QUERYCOUNT = {
 UNFOLD = {
     "SITE_TITLE": "Culina",
     "SITE_HEADER": "Culina",
-    "SITE_SUBHEADER": "Painel Administrativo",
+    "SITE_DROPDOWN": "app.unfold.dropdown_callback",
+    "SITE_SUBHEADER": "app.unfold.subheader_callback",
     "COLORS": {
         # Blue
         "primary": {

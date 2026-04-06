@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from app.account.serializers import AddressSerializer
+from app.common.models import BaseSerializer
 from app.store.models import OpeningHours, Store
-from app.utils import BaseSerializer
 
 
 class OpeningHoursSerializer(BaseSerializer):

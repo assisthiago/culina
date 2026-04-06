@@ -4,7 +4,7 @@ from django.db.models import F, Q
 from django.utils.text import slugify
 
 from app.account.models import Account
-from app.utils import BaseModel
+from app.common.models import BaseModel
 
 
 class OpeningHours(models.Model):
